@@ -1,0 +1,29 @@
+To fix the "Tenant or user not found" error caused by PostgreSQL Row Level Security (RLS) on the "users" table, please follow these steps:
+
+1. Connect to your PostgreSQL database using a database GUI (e.g., pgAdmin, DBeaver, Supabase dashboard) or the psql CLI.
+
+2. Run the following SQL commands to disable RLS on the "users" table:
+
+   ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+
+3. Run your Prisma migrations:
+
+   npx prisma migrate deploy
+
+4. After successful migration, re-enable RLS on the "users" table:
+
+   ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+
+Notes:
+- If you use psql CLI, ensure your connection string is properly URL-encoded, especially if your password contains special characters like '@'.
+- Example of URL-encoded connection string:
+
+  postgresql://username:password@host:port/database
+
+  Replace '@' in password with '%40'.
+
+- If you need help with URL encoding or running these commands, please ask.
+
+This manual process bypasses the issues with the migration script and connection string parsing.
+
+After completing these steps, test your application again to confirm the error is resolved.
